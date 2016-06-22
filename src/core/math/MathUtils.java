@@ -1,8 +1,5 @@
 package core.math;
 
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-
 public class MathUtils
 {
     public static float clamp(float value, float lower, float upper)
@@ -22,11 +19,9 @@ public class MathUtils
     public static Matrix4f createView(Vector3f position, Vector3f rotation)
     {
         Matrix4f view = new Matrix4f();
-        view.setIdentity();
 
         view.rotate((float) Math.toRadians(rotation.x), new Vector3f(1, 0, 0));
         view.rotate((float) Math.toRadians(rotation.y), new Vector3f(0, 1, 0));
-
         view.translate(new Vector3f(-position.x, -position.y, -position.z));
 
         return view;
@@ -42,14 +37,14 @@ public class MathUtils
 
         Matrix4f projection = new Matrix4f();
 
-        projection.m00 = x;
-        projection.m11 = y;
+        projection.m[0][0] = x;
+        projection.m[1][1] = y;
 
-        projection.m22 = -(far + near) / frustum;
-        projection.m23 = -1;
+        projection.m[2][2] = -(far + near) / frustum;
+        projection.m[2][3] = -1;
 
-        projection.m32 = -(2 * near * far) / frustum;
-        projection.m33 = 0;
+        projection.m[3][2] = -(2 * near * far) / frustum;
+        projection.m[3][3] = 0;
 
         return projection;
     }

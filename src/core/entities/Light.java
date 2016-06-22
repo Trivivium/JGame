@@ -1,6 +1,6 @@
 package core.entities;
 
-import org.lwjgl.util.vector.Vector3f;
+import core.math.Vector3f;
 
 public class Light
 {

@@ -2,9 +2,11 @@ package core.graphics.shaders;
 
 import core.graphics.Camera;
 import core.entities.Light;
+
+import core.math.Matrix4f;
 import core.math.MathUtils;
+
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.util.vector.Matrix4f;
 
 import java.io.File;
 

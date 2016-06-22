@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-
 public class Engine
 {
     private final float TARGET_UPDATES_PER_SECOND = 30f;
@@ -124,7 +122,7 @@ public class Engine
          * Enable transparency blending
          */
         GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         /*
          * Enable back-face culling of entities
@@ -187,7 +185,7 @@ public class Engine
 
     protected void render(float alpha)
     {
-        System.out.println("Update completion: " + alpha);
+        //System.out.println("Update completion: " + alpha);
 
         this.renderer.render(alpha, this.sun, this.camera, this.player);
         this.renderer.render(alpha, this.sun, this.camera, this.entities);

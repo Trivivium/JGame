@@ -1,25 +1,26 @@
 package core.graphics.renderers;
 
 import core.Engine;
-import core.graphics.Projection;
-import core.graphics.Camera;
+
 import core.entities.Entity;
 import core.entities.Light;
-import core.graphics.models.Model;
-import core.graphics.textures.ModelTexture;
-import core.math.MathUtils;
 
+import core.graphics.Camera;
+import core.graphics.Projection;
+import core.graphics.models.Model;
 import core.graphics.models.TexturedModel;
 import core.graphics.shaders.EntityShader;
+import core.graphics.textures.ModelTexture;
 
+import core.math.Vector3f;
+import core.math.MathUtils;
+
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector3f;
-
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 
 public class EntityRenderer extends Renderer
 {

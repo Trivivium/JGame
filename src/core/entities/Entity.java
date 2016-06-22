@@ -1,7 +1,7 @@
 package core.entities;
 
+import core.math.Vector3f;
 import core.graphics.models.TexturedModel;
-import org.lwjgl.util.vector.Vector3f;
 
 public class Entity
 {

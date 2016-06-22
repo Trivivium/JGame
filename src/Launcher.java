@@ -6,22 +6,20 @@ import core.entities.Entity;
 import core.entities.Light;
 import core.entities.Player;
 
-import core.graphics.loaders.Loader;
-import core.graphics.loaders.OBJLoader;
+import core.graphics.loaders.*;
+import core.graphics.models.*;
 
-import core.graphics.models.Model;
-import core.graphics.models.TexturedModel;
-
-import core.graphics.renderers.EntityRenderer;
 import core.graphics.shaders.EntityShader;
+import core.graphics.renderers.EntityRenderer;
 
 import core.graphics.textures.ModelTexture;
 
-import org.lwjgl.util.vector.Vector3f;
+import core.math.Vector3f;
+//import org.lwjgl.util.vector.Vector3f;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Launcher
 {
@@ -30,7 +28,7 @@ public class Launcher
 
     public static void main(String[] args)
     {
-        Display display = new Display("Icebox", DISPLAY_WIDTH, DISPLAY_HEIGHT);
+        Display display = new Display("JGame Engine", DISPLAY_WIDTH, DISPLAY_HEIGHT);
         Loader  loader  = new Loader();
 
         Camera          camera     = new Camera(new Vector3f(0, 0, 10), new Vector3f(0, 0, 0));
@@ -43,10 +41,8 @@ public class Launcher
 
         List<Entity>  entities = new ArrayList<>();
 
-        Model         model   = OBJLoader.load(new File("resources/models/cube.obj"), loader);
-        ModelTexture  texture = new ModelTexture(loader.loadTexture(new File("resources/textures/gold.png")));
-
-        TexturedModel playerTexture = new TexturedModel(model,texture);
+        Model        model   = OBJLoader.load(new File("resources/models/cube.obj"), loader);
+        ModelTexture texture = new ModelTexture(loader.loadTexture(new File("resources/textures/gold.png")));
 
         Light sun = new Light(new Vector3f(0, 40, 0), new Vector3f(1, 1, 1));
 
@@ -58,7 +54,7 @@ public class Launcher
 
         engine.addSun(sun);
 
-        Player player = new Player(playerTexture, new Vector3f(0, 0, 0));
+        Player player = new Player(new TexturedModel(model,texture), new Vector3f(0, 0, 0));
 
         camera.setPlayer(player);
         engine.setPlayer(player);
@@ -67,5 +63,6 @@ public class Launcher
 
         engine.start();
         engine.cleanup();
+        loader.cleanup();
     }
 }

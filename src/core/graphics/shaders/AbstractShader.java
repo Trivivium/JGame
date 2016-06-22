@@ -2,8 +2,9 @@ package core.graphics.shaders;
 
 import core.graphics.Camera;
 import core.entities.Light;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
+
+import core.math.Matrix4f;
+import core.math.Vector3f;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -14,9 +15,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
 
-import java.nio.FloatBuffer;
-
 import java.util.HashMap;
+import java.nio.FloatBuffer;
 
 public abstract class AbstractShader
 {

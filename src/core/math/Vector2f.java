@@ -13,10 +13,26 @@ public class Vector2f
         this.y = y;
     }
 
+    public Vector2f(FloatBuffer buffer)
+    {
+        this.load(buffer);
+    }
+
     public void set(Vector2f in)
     {
         this.x = in.x;
         this.y = in.y;
+    }
+
+    public void set(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Vector2f copy()
+    {
+        return new Vector2f(this.x, this.y);
     }
 
     /**
@@ -24,7 +40,7 @@ public class Vector2f
      */
     public float length()
     {
-        return (float) Math.sqrt(this.x * this.x + this.y * this.y);
+        return (float) Math.sqrt(this.lengthSquared());
     }
 
     /**
@@ -36,7 +52,9 @@ public class Vector2f
     }
 
     /**
-     * @return Returns a new vector instance with normalized values.
+     * Normalizes the vector.
+     *
+     * @return Returns a reference to the vector.
      */
     public Vector2f normalize()
     {
@@ -47,182 +65,146 @@ public class Vector2f
             throw new IllegalStateException("Zero length vector");
         }
 
-        return new Vector2f(this.x / length, this.y / length);
+        this.x /= length;
+        this.y /= length;
+
+        return this;
     }
 
-    /**
-     * @param in A vector to calculate against.
-     *
-     * @return Returns the dot product between two vectors.
-     */
-    public float dot(Vector2f in)
+    public Vector2f translate(Vector2f in)
     {
-        return this.x * in.x + this.y * in.y;
+        this.x += in.x;
+        this.y += in.y;
+
+        return this;
     }
 
-    /**
-     * @param in A vector to calculate against.
-     *
-     * @return Returns a angle between two vectors in degrees.
-     */
-    public float angle(Vector2f in)
-    {
-        float dls = this.dot(in) / (this.length() * in.length());
-
-        if(dls < -1.0f)
-        {
-            dls = -1.0f;
-        }
-        else if(dls > 1.0f)
-        {
-            dls = 1.0f;
-        }
-
-        return (float) Math.toDegrees(Math.acos(dls));
-    }
-
-    /**
-     * @param in A vector to calculate against.
-     *
-     * @return Returns the cross product between two vectors.
-     */
-    public float cross(Vector2f in)
-    {
-        return this.x * in.y - this.y * in.x;
-    }
-
-    public void translate(float x, float y)
+    public Vector2f translate(float x, float y)
     {
         this.x += x;
         this.y += y;
+
+        return this;
     }
 
     public Vector2f negate()
     {
-        return new Vector2f(-this.x, -this.y);
-    }
+        this.x = -this.x;
+        this.y = -this.y;
 
-    /**
-     * @param angle An angle in degrees to rotate to vector.
-     *
-     * @return Returns a new Vector rotated the specified angle.
-     */
-    public Vector2f rotate(float angle)
-    {
-        double rad = Math.toRadians(angle);
-        double cos = Math.cos(rad);
-        double sin = Math.sin(rad);
-
-        return new Vector2f((float) (this.x * cos - this.y * sin), (float) (this.x * sin + this.y * cos));
-    }
-
-    /**
-     * @param in     A vector to calculate against.
-     * @param factor A interpolation factor.
-     *
-     * @return Returns the resulting interpolated vector.
-     */
-    public Vector2f interpolate(Vector2f in, float factor)
-    {
-        return in.subtract(this).multiply(factor).add(this);
+        return this;
     }
 
     /**
      * @param in A vector to add to this.
      *
-     * @return Returns the new vector instance with the provided and current
-     *         vector added together.
+     * @return Returns a reference to the vector with each value add the
+     *         corresponding value in the provided vector.
      */
     public Vector2f add(Vector2f in)
     {
-        return new Vector2f(this.x + in.x, this.y + in.y);
+        this.x += in.x;
+        this.y += in.y;
+
+        return this;
     }
 
     /**
      * @param value A value to add to all vector elements.
      *
-     * @return Returns the new vector instance with the provided and current
-     *         vector added together.
+     * @return Returns a reference to the vector with all values added the
+     *         specified value.
      */
     public Vector2f add(float value)
     {
-        return new Vector2f(this.x + value, this.y + value);
-    }
+        this.x += value;
+        this.y += value;
 
+        return this;
+    }
 
     /**
      * @param in A vector to add to this.
      *
-     * @return Returns the new vector instance with the provided and current
-     *         vector subtracted.
+     * @return Returns a reference to the vector with each value subtracted
+     *         by the corresponding value in the provided vector.
      */
     public Vector2f subtract(Vector2f in)
     {
-        return new Vector2f(this.x - in.x, this.y - in.y);
+        this.x -= in.x;
+        this.y -= in.y;
+
+        return this;
     }
 
     /**
      * @param value A value to add to all vector elements.
      *
-     * @return Returns the new vector instance with the provided and current
-     *         vector added together.
+     * @return Returns a reference to the vector with all values subtracted
+     *         the specified value.
      */
     public Vector2f subtract(float value)
     {
-        return new Vector2f(this.x - value, this.y - value);
+        this.x -= value;
+        this.y -= value;
+
+        return this;
     }
 
     /**
      * @param in A vector to add to this.
      *
-     * @return Returns the new vector instance with the provided and current
-     *         vector multiplied.
+     * @return Returns a reference to the vector with each value multiplied
+     *         by the corresponding value in the provided vector.
      */
     public Vector2f multiply(Vector2f in)
     {
-        return new Vector2f(this.x * in.x, this.y * in.y);
+        this.x *= in.x;
+        this.y *= in.y;
+
+        return this;
     }
 
     /**
      * @param factor A multiplication factor to multiply all vector elements with.
      *
-     * @return Returns the new vector instance with the provided and current
-     *         vector added together.
+     * @return Returns a reference to the vector with all values multiplied
+     *         by the given factor.
      */
     public Vector2f multiply(float factor)
     {
-        return new Vector2f(this.x * factor, this.y * factor);
+        this.x *= factor;
+        this.y *= factor;
+
+        return this;
     }
 
     /**
      * @param in A vector to add to this.
      *
-     * @return Returns the new vector instance with the provided and current
-     *         vector divided.
+     * @return Returns a reference to the vector with each value divided
+     *         by the corresponding value on the provided vector.
      */
     public Vector2f divide(Vector2f in)
     {
-        return new Vector2f(this.x / in.x, this.y / in.y);
+        this.x /= in.x;
+        this.y /= in.y;
+
+        return this;
     }
 
     /**
      * @param divisor A divisor for all vector elements.
      *
-     * @return Returns the new vector instance with the provided and current
-     *         vector added together.
+     * @return Returns a reference to the vector with all values
+     *         divided by the specified divisor.
      */
     public Vector2f divide(float divisor)
     {
-        return new Vector2f(this.x / divisor, this.y / divisor);
-    }
+        this.x /= divisor;
+        this.y /= divisor;
 
-    /**
-     * @return Returns a new vector instance with the current vector
-     *         as absolute values.
-     */
-    public Vector2f abs()
-    {
-        return new Vector2f(Math.abs(this.x), Math.abs(this.y));
+        return this;
     }
 
     /**
@@ -230,11 +212,11 @@ public class Vector2f
      *
      * @param in A vector to compare against.
      *
-     * @return Return TRUE of both vectors has equal element values, FALSE otherwise.
+     * @return Return TRUE of both vectors has equal element m, FALSE otherwise.
      */
     public boolean equals(Vector2f in)
     {
-        if(in == null)
+        if(in == null || this.getClass() != in.getClass())
         {
             return false;
         }
@@ -242,12 +224,22 @@ public class Vector2f
         return this == in || this.x == in.x && this.y == in.y;
     }
 
+    /**
+     * Populates the vector with data from a float buffer.
+     *
+     * @param buffer A buffer instance.
+     */
     public void load(FloatBuffer buffer)
     {
         this.x = buffer.get();
         this.y = buffer.get();
     }
 
+    /**
+     * Stores the vector into a float buffer
+     *
+     * @param buffer A buffer instance.
+     */
     public void store(FloatBuffer buffer)
     {
         buffer.put(this.x);

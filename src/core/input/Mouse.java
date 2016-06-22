@@ -1,6 +1,5 @@
 package core.input;
 
-import core.graphics.Display;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
 import static org.lwjgl.glfw.GLFW.*;

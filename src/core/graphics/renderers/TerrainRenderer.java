@@ -1,18 +1,23 @@
 package core.graphics.renderers;
 
 import core.Engine;
-import core.graphics.Projection;
-import core.graphics.Camera;
+
 import core.entities.Light;
+
+import core.graphics.Camera;
+import core.graphics.Projection;
 import core.graphics.shaders.TerrainShader;
 import core.graphics.textures.TerrainTexturePack;
+
+import terrain.Terrain;
+
+import core.math.Matrix4f;
+import core.math.Vector3f;
 import core.math.MathUtils;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-import terrain.Terrain;
 
 import java.util.List;
 

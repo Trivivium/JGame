@@ -1,7 +1,7 @@
 package core.graphics;
 
+import core.math.Matrix4f;
 import core.math.MathUtils;
-import org.lwjgl.util.vector.Matrix4f;
 
 public class Projection
 {

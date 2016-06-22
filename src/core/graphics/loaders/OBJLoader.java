@@ -1,8 +1,9 @@
 package core.graphics.loaders;
 
 import core.graphics.models.Model;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+
+import core.math.Vector2f;
+import core.math.Vector3f;
 
 import java.io.BufferedReader;
 import java.io.File;

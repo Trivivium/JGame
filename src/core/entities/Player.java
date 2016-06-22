@@ -2,8 +2,9 @@ package core.entities;
 
 import core.graphics.models.TexturedModel;
 import core.input.Keyboard;
+import core.math.Vector3f;
+
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.util.vector.Vector3f;
 
 public class Player extends Entity implements Updatable, Inputable
 {

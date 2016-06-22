@@ -1,14 +1,15 @@
 package core.graphics;
 
-import core.entities.Inputable;
 import core.entities.Player;
+import core.entities.Inputable;
 import core.entities.Updatable;
+
+import core.math.Vector3f;
 import core.math.MathUtils;
+
 import core.input.Cursor;
 import core.input.Mouse;
 import core.input.MouseWheel;
-
-import org.lwjgl.util.vector.Vector3f;
 
 public class Camera implements Updatable, Inputable
 {

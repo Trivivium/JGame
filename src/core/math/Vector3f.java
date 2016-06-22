@@ -10,9 +10,12 @@ public class Vector3f
 
     public Vector3f(float x, float y, float z)
     {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.set(x, y, z);
+    }
+
+    public Vector3f(FloatBuffer buffer)
+    {
+        this.load(buffer);
     }
 
     public void set(Vector3f in)
@@ -22,12 +25,30 @@ public class Vector3f
         this.z = in.z;
     }
 
+    public void set(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void set(float x, float y, float z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    public Vector3f copy()
+    {
+        return new Vector3f(this.x, this.y , this.z);
+    }
+
     /**
      * @return Returns the length of the vector.
      */
     public float length()
     {
-        return (float) Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+        return (float) Math.sqrt(this.lengthSquared());
     }
 
     /**
@@ -39,7 +60,9 @@ public class Vector3f
     }
 
     /**
-     * @return Returns a new vector instance with normalized values.
+     * Normalizes the vector.
+     *
+     * @return Returns a reference to the vector.
      */
     public Vector3f normalize()
     {
@@ -50,93 +73,38 @@ public class Vector3f
             throw new IllegalStateException("Zero length vector");
         }
 
-        return new Vector3f(this.x / length, this.y / length, this.z / length);
+        this.x /= length;
+        this.y /= length;
+        this.z /= length;
+
+        return this;
     }
 
-    /**
-     * @param in A vector to calculate against.
-     *
-     * @return Returns the dot product between two vectors.
-     */
-    public float dot(Vector3f in)
+    public Vector3f translate(Vector3f in)
     {
-        return this.x * in.x + this.y * in.y + this.z * in.z;
+        this.x += in.x;
+        this.y += in.y;
+        this.z += in.z;
+
+        return this;
     }
 
-    /**
-     * @param in A vector to calculate against.
-     *
-     * @return Returns a angle between two vectors in degrees.
-     */
-    public float angle(Vector3f in)
-    {
-        float dls = this.dot(in) / (this.length() * in.length());
-
-        if(dls < -1.0f)
-        {
-            dls = -1.0f;
-        }
-        else if(dls > 1.0f)
-        {
-            dls = 1.0f;
-        }
-
-        return (float) Math.toDegrees(Math.acos(dls));
-    }
-
-    /**
-     * @param in A vector to calculate against.
-     *
-     * @return Returns the cross product between two vectors.
-     */
-    public Vector3f cross(Vector3f in)
-    {
-        float x = this.y * in.z - this.z * in.y;
-        float y = this.z * in.x - this.x * in.z;
-        float z = this.x * in.y - this.y * in.x;
-
-        return new Vector3f(x, y, z);
-    }
-
-    public void translate(float x, float y, float z)
+    public Vector3f translate(float x, float y, float z)
     {
         this.x += x;
         this.y += y;
         this.z += z;
+
+        return this;
     }
 
     public Vector3f negate()
     {
-        return new Vector3f(-this.x, -this.y, -this.z);
-    }
+        this.x = -this.x;
+        this.y = -this.y;
+        this.z = -this.z;
 
-    public Vector3f rotate(Vector3f axis, float angle)
-    {
-        float sin = (float) Math.sin(-angle);
-        float cos = (float) Math.cos(-angle);
-
-        axis.multiply(sin).add((this.multiply(cos)).add(axis.multiply(this.dot(axis.multiply(1 - cos)))));
-
-        return this.cross(axis);
-    }
-
-    public Vector3f rotate(Quaternion rotation)
-    {
-        Quaternion conjugate = rotation.conjugate();
-        Quaternion result    = rotation.multiply(this).multiply(conjugate);
-
-        return new Vector3f(result.x, result.y, result.z);
-    }
-
-    /**
-     * @param in     A vector to calculate against.
-     * @param factor A interpolation factor.
-     *
-     * @return Returns the resulting interpolated vector.
-     */
-    public Vector3f interpolate(Vector3f in, float factor)
-    {
-        return in.subtract(this).multiply(factor).add(this);
+        return this;
     }
 
     /**
@@ -147,7 +115,11 @@ public class Vector3f
      */
     public Vector3f add(Vector3f in)
     {
-        return new Vector3f(this.x + in.x, this.y + in.y, this.z + in.z);
+        this.x += in.x;
+        this.y += in.y;
+        this.z += in.z;
+
+        return this;
     }
 
     /**
@@ -158,9 +130,12 @@ public class Vector3f
      */
     public Vector3f add(float value)
     {
-        return new Vector3f(this.x + value, this.y + value, this.z + value);
-    }
+        this.x += value;
+        this.y += value;
+        this.z += value;
 
+        return this;
+    }
 
     /**
      * @param in A vector to add to this.
@@ -170,7 +145,11 @@ public class Vector3f
      */
     public Vector3f subtract(Vector3f in)
     {
-        return new Vector3f(this.x - in.x, this.y - in.y, this.z - in.z);
+        this.x -= in.x;
+        this.y -= in.y;
+        this.z -= in.z;
+
+        return this;
     }
 
     /**
@@ -181,7 +160,11 @@ public class Vector3f
      */
     public Vector3f subtract(float value)
     {
-        return new Vector3f(this.x - value, this.y - value, this.z - value);
+        this.x -= value;
+        this.y -= value;
+        this.z -= value;
+
+        return this;
     }
 
     /**
@@ -192,7 +175,11 @@ public class Vector3f
      */
     public Vector3f multiply(Vector3f in)
     {
-        return new Vector3f(this.x * in.x, this.y * in.y, this.z * in.z);
+        this.x *= in.x;
+        this.y *= in.y;
+        this.z *= in.z;
+
+        return this;
     }
 
     /**
@@ -203,7 +190,11 @@ public class Vector3f
      */
     public Vector3f multiply(float factor)
     {
-        return new Vector3f(this.x * factor, this.y * factor, this.z * factor);
+        this.x *= factor;
+        this.y *= factor;
+        this.z *= factor;
+
+        return this;
     }
 
     /**
@@ -214,7 +205,11 @@ public class Vector3f
      */
     public Vector3f divide(Vector3f in)
     {
-        return new Vector3f(this.x / in.x, this.y / in.y, this.z / in.z);
+        this.x /= in.x;
+        this.y /= in.y;
+        this.z /= in.z;
+
+        return this;
     }
 
     /**
@@ -225,16 +220,11 @@ public class Vector3f
      */
     public Vector3f divide(float divisor)
     {
-        return new Vector3f(this.x / divisor, this.y / divisor, this.z / divisor);
-    }
+        this.x /= divisor;
+        this.y /= divisor;
+        this.z /= divisor;
 
-    /**
-     * @return Returns a new vector instance with the current vector
-     *         as absolute values.
-     */
-    public Vector3f abs()
-    {
-        return new Vector3f(Math.abs(this.x), Math.abs(this.y), Math.abs(this.z));
+        return this;
     }
 
     /**
@@ -242,11 +232,11 @@ public class Vector3f
      *
      * @param in A vector to compare against.
      *
-     * @return Return TRUE of both vectors has equal element values, FALSE otherwise.
+     * @return Return TRUE of both vectors has equal element m, FALSE otherwise.
      */
     public boolean equals(Vector3f in)
     {
-        if(in == null)
+        if(in == null || this.getClass() != in.getClass())
         {
             return false;
         }
@@ -254,6 +244,11 @@ public class Vector3f
         return this == in || this.x == in.x && this.y == in.y && this.z == in.z;
     }
 
+    /**
+     * Populates the vector with data from a float buffer.
+     *
+     * @param buffer A buffer instance.
+     */
     public void load(FloatBuffer buffer)
     {
         this.x = buffer.get();
@@ -261,6 +256,11 @@ public class Vector3f
         this.z = buffer.get();
     }
 
+    /**
+     * Stores the vector into a float buffer
+     *
+     * @param buffer A buffer instance.
+     */
     public void store(FloatBuffer buffer)
     {
         buffer.put(this.x);
