@@ -1,21 +1,20 @@
-import core.Engine;
-import core.Timer;
-import core.graphics.*;
-import core.graphics.Camera;
-import core.entities.Entity;
-import core.entities.Light;
-import core.entities.Player;
+import engine.core.Engine;
+import engine.core.Timer;
+import engine.core.graphics.*;
+import engine.core.graphics.Camera;
+import engine.entities.Entity;
+import engine.entities.Light;
+import engine.entities.Player;
 
-import core.graphics.loaders.*;
-import core.graphics.models.*;
+import engine.core.graphics.loaders.*;
+import engine.core.graphics.models.*;
 
-import core.graphics.shaders.EntityShader;
-import core.graphics.renderers.EntityRenderer;
+import engine.core.graphics.shaders.EntityShader;
+import engine.core.graphics.renderers.EntityRenderer;
 
-import core.graphics.textures.ModelTexture;
+import engine.core.graphics.textures.ModelTexture;
 
-import core.math.Vector3f;
-//import org.lwjgl.util.vector.Vector3f;
+import engine.core.math.Vector3f;
 
 import java.io.File;
 import java.util.List;
@@ -46,11 +45,10 @@ public class Launcher
 
         Light sun = new Light(new Vector3f(0, 40, 0), new Vector3f(1, 1, 1));
 
-        TexturedModel staticEntity1 = new TexturedModel(model, texture);
-        TexturedModel staticEntity2 = new TexturedModel(model, texture);
+        TexturedModel block = new TexturedModel(model, texture);
 
-        entities.add(new Entity(staticEntity1, new Vector3f(-25, 0, -30)));
-        entities.add(new Entity(staticEntity2, new Vector3f( 25, 0, -30)));
+        entities.add(new Entity(block, new Vector3f(-25, 0, -30)));
+        entities.add(new Entity(block, new Vector3f( 25, 0, -30)));
 
         engine.addSun(sun);
 
