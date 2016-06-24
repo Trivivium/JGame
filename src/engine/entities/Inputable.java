@@ -1,4 +1,4 @@
-package core.entities;
+package engine.entities;
 
 public interface Inputable
 {

@@ -1,6 +1,6 @@
-package core.entities;
+package engine.entities;
 
-import core.math.Vector3f;
+import engine.core.math.Vector3f;
 
 public class Light
 {

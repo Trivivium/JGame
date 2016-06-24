@@ -1,7 +1,7 @@
-package core.entities;
+package engine.entities;
 
-import core.math.Vector3f;
-import core.graphics.models.TexturedModel;
+import engine.core.math.Vector3f;
+import engine.core.graphics.models.TexturedModel;
 
 public class Entity
 {

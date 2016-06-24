@@ -1,8 +1,8 @@
-package core.entities;
+package engine.entities;
 
-import core.graphics.models.TexturedModel;
-import core.input.Keyboard;
-import core.math.Vector3f;
+import engine.core.graphics.models.TexturedModel;
+import engine.core.input.Keyboard;
+import engine.core.math.Vector3f;
 
 import org.lwjgl.glfw.GLFW;
 
